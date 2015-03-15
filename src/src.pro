@@ -4,6 +4,7 @@ linux*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
 
 win*|linux*:!tizen:!android:DESTDIR = ../lib/libmana/qml/Mana/
 macx:DESTDIR = ../example/tales.app/Contents/Resources/qml/Mana
+ios:DESTDIR = ../example/debug-iphonesimulator/tales.app/qml/Mana
 else:DESTDIR = qml/Mana/
 TARGET = mana
 
@@ -170,6 +171,7 @@ HEADERS += \
 folder_Mana.source = mana/qml/Mana
 win*|linux*:!tizen:!android:folder_Mana.target = ../lib/libmana/qml
 macx:folder_Mana.target = /../../../../example/tales.app/Contents/Resources/qml/
+ios:folder_Mana.target = /../../example/debug-iphonesimulator/tales.app/qml/
 else:folder_Mana.target = qml
 DEPLOYMENTFOLDERS = folder_Mana
 

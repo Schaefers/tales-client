@@ -29,13 +29,17 @@
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_LINUX_TIZEN)
 static QString adjustSharePath(const QString &path)
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_IOS)
     if (!QDir::isAbsolutePath(path))
-        return QString::fromLatin1("%1/../Resources/%2")
+        return QString::fromLatin1("%1/%2")
                 .arg(QCoreApplication::applicationDirPath(), path);
 #elif defined(Q_OS_QNX)
     if (!QDir::isAbsolutePath(path))
         return QString::fromLatin1("app/native/%1").arg(path);
+#elif defined(Q_OS_MAC)
+    if (!QDir::isAbsolutePath(path))
+        return QString::fromLatin1("%1/../Resources/%2")
+                .arg(QCoreApplication::applicationDirPath(), path);
 #elif (defined(Q_OS_UNIX) || defined(Q_OS_WIN)) && !defined(Q_OS_ANDROID)
     const QString pathInInstallDir =
             QString::fromLatin1("%1/../share/tales-client/%2").arg(QCoreApplication::applicationDirPath(), path);
@@ -105,11 +109,16 @@ int main(int argc, char *argv[])
     engine.load(app.applicationDirPath() +
                 QLatin1String("/../data/qml/main/mobile.qml"));
 #else
-#ifdef Q_OS_OSX
+#ifdef Q_OS_IOS
+    const QString importPath = "/qml/";
+#elif defined(Q_OS_OSX)
     const QString importPath = "/../Resources/qml/";
 #else
     const QString importPath = "/../lib/libmana/qml/";
 #endif
+    QString a = adjustSharePath(app.applicationDirPath() +
+                                importPath);
+    qDebug() << QDir(a).entryList();
     engine.addImportPath(adjustSharePath(app.applicationDirPath() +
                          importPath));
     engine.load(adjustSharePath(QLatin1String("qml/main/mobile.qml")));
@@ -136,6 +145,8 @@ int main(int argc, char *argv[])
         window->showFullScreen();
     else
         window->show();
+    //qDebug()<<adjustSharePath(app.applicationDirPath() +
+                            //importPath);
 #endif
 
     return app.exec();
