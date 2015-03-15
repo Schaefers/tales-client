@@ -2,9 +2,15 @@ TEMPLATE = lib
 CONFIG += qt plugin
 linux*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
 
+<<<<<<< HEAD
 win*:DESTDIR = ../lib/libmana/qml/Mana/
 else:linux*:!tizen:!android:DESTDIR = ../lib/libmana/qml/Mana/
 else:macx:DESTDIR = ../example/tales.app/Contents/Resources/qml/Mana
+=======
+win*|linux*:!tizen:!android:DESTDIR = ../lib/libmana/qml/Mana/
+macx:DESTDIR = ../example/tales.app/Contents/Resources/qml/Mana
+ios:DESTDIR = ../example/debug-iphonesimulator/tales.app/qml/Mana
+>>>>>>> FETCH_HEAD
 else:DESTDIR = qml/Mana/
 TARGET = mana
 
@@ -172,10 +178,17 @@ HEADERS += \
 
 
 folder_Mana.source = mana/qml/Mana
+<<<<<<< HEAD
 win*:folder_Mana.target = ../lib/libmana/qml/
 else:linux*:!tizen:!android:folder_Mana.target = ../lib/libmana/qml/
 else:macx:folder_Mana.target = ../example/tales.app/Contents/Resources/qml/
 else:folder_Mana.target = qml/
+=======
+win*|linux*:!tizen:!android:folder_Mana.target = ../lib/libmana/qml
+macx:folder_Mana.target = /../../../../example/tales.app/Contents/Resources/qml/
+ios:folder_Mana.target = /../../example/debug-iphonesimulator/tales.app/qml/
+else:folder_Mana.target = qml
+>>>>>>> FETCH_HEAD
 DEPLOYMENTFOLDERS = folder_Mana
 
 # Please do not modify the following two lines. Required for deployment.
